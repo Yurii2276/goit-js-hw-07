@@ -1,6 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-// import * as basicLightbox from './node_modules/basiclightbox/dist/basicLightbox.min.js';
+
 
 
 const refs = {
@@ -30,6 +30,7 @@ function handleGalleryItemClick(event) {
 
     if (target.classList.contains('gallery__image')) {
         const source = target.dataset.source;
+        target.src = source;
         openModal(source);
     }
 }
