@@ -1,6 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-
+let instance = null;
 
 
 const refs = {
@@ -32,13 +32,23 @@ function handleGalleryItemClick(event) {
         const source = target.dataset.source;
         target.src = source;
         openModal(source);
+        window.addEventListener('keydown', handleKeyPress);
     }
 }
 
 function openModal(source) {
-    const instance = basicLightbox.create(`<img src="${source}">`);
+    if (instance) {
+        instance.close();
+    }
+    instance = basicLightbox.create(`<img src="${source}">`);
     instance.show();
 }
 
+function handleKeyPress(event) {
+        if (event.key === 'Escape') {
+            instance.close(); 
+            window.removeEventListener('keydown', handleKeyPress);
+        }
+    }
 
 
