@@ -23,6 +23,7 @@ function createGalleryMarkup(array) {
         ></a></li>`).join(``);
 }
 
+
 function handleGalleryItemClick(event) {
     event.preventDefault();
 
@@ -30,9 +31,7 @@ function handleGalleryItemClick(event) {
 
     if (target.classList.contains('gallery__image')) {
         const source = target.dataset.source;
-        target.src = source;
         openModal(source);
-        window.addEventListener('keydown', handleKeyPress);
     }
 }
 
@@ -40,7 +39,19 @@ function openModal(source) {
     if (instance) {
         instance.close();
     }
-    instance = basicLightbox.create(`<img src="${source}">`);
+
+    const options = {
+        onShow: () => {
+        
+            window.addEventListener('keydown', handleKeyPress);
+        },
+        onClose: () => {
+            
+            window.removeEventListener('keydown', handleKeyPress);
+        },
+    };
+
+    instance = basicLightbox.create(`<img src="${source}">`, options);
     instance.show();
 }
 
